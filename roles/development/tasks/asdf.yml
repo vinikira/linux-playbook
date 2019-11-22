@@ -3,7 +3,7 @@
   git:
     repo: 'https://github.com/asdf-vm/asdf.git'
     dest: '/home/{{ user_name }}/.asdf'
-    version: 0.7.5
+    version: release-0.7.5
 
 - name: Adding Rust ASDF Plugin
   shell: 'bash /home/{{ user_name }}/.asdf/bin.asdf plugin-add rust https://github.com/code-lever/asdf-rust.git'
