@@ -1,0 +1,13 @@
+---
+- name: Installing Syncthing
+  pacman:
+    name: ['syncthing']
+    state: present
+  become: true
+
+- name: Start and enable Syncthing service
+  systemd:
+    name: syncthing
+    state: started
+    enabled: yes
+    scope: user

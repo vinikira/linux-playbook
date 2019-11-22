@@ -1,0 +1,25 @@
+---
+- name: Fetching dot-files
+  git:
+    repo: 'https://github.com/vinikira/dot-files'
+    dest: '/home/{{ user_name }}/git/dot-files'
+    update: no
+
+- name: Fetching Summon
+  git:
+    repo: 'https://gitlab.com/semente/summon'
+    dest: '/home/{{ user_name }}/git/summon'
+    update: no
+
+- name: Given access to summon
+  file:
+    path: '/home/{{ user_name }}/git/summon/summon.sh'
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 0755
+
+- name: Summoning ZSH dot-files
+  shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/zsh'
+
+- name: Summoning bin dot-files
+  shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/bin'

@@ -1,0 +1,21 @@
+---
+- include: zsh.yml
+- include: dot-files.yml
+
+- name: Custom Fonts
+  pacman:
+    name: ['ttf-fira-code']
+    state: present
+  become: true
+
+- name: CLI Utils
+  pacman:
+    name: ['ripgrep', 'bat', 'tmux']
+    state: present
+  become: true
+
+- name: ASPELL
+  pacman:
+    name: ['aspell', 'aspell-en', 'aspell-pt']
+    state: present
+  become: true

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+sudo pacman -Syy yay git ansible --noconfirm
+
+mkdir ~/git
+
+git clone http://github.com/vinikira/manjaro-playbook ~/git/manjaro-playbook/
+
+echo "Type the user name: "
+read user_name
+
+ansible-playbook playbook.yml --extra-vars="user_name=${user_name}" --ask-become-pass
