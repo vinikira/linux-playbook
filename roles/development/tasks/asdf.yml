@@ -6,16 +6,16 @@
     version: v0.7.5
 
 - name: Adding Rust ASDF Plugin
-  shell: 'bash /home/{{ user_name }}/.asdf/bin.asdf plugin-add rust https://github.com/code-lever/asdf-rust.git'
+  shell: 'bash /home/{{ user_name }}/.asdf/bin/asdf plugin-add rust https://github.com/code-lever/asdf-rust.git'
 
 - name: Adding Erlang ASDF Plugin
-  shell: 'bash /home/{{ user_name }}/.asdf/bin.asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
+  shell: 'bash /home/{{ user_name }}/.asdf/bin/asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git'
 
 - name: Adding Elixir ASDF Plugin
-  shell: 'bash /home/{{ user_name }}/.asdf/bin.asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'
+  shell: 'bash /home/{{ user_name }}/.asdf/bin/asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git'
 
 - name: Adding Node.js ASDF Plugin
-  shell: 'bash /home/{{ user_name }}/.asdf/bin.asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
+  shell: 'bash /home/{{ user_name }}/.asdf/bin/asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git'
 
 - name: Importing Node.js release team's OpenPGP keys
   shell: 'bash /home/{{ user_name }}/.asdf/plugins/nodejs/bin/import-release-team-keyring'
