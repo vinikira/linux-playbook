@@ -6,7 +6,8 @@ mkdir ~/git
 
 git clone http://github.com/vinikira/manjaro-playbook ~/git/manjaro-playbook/
 
-echo "Type the user name: "
-read user_name
+cd ~/git/manjaro-playbook/
+
+read -p "Type the user name: " user_name
 
 ansible-playbook playbook.yml --extra-vars="user_name=${user_name}" --ask-become-pass
