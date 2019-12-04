@@ -10,3 +10,8 @@
     name: ['chromium']
     state: present
   become: true
+
+- name: Instaling Stacer
+  aur:
+    name: ['stacer-bin']
+    skip_installed: yes

@@ -1,0 +1,5 @@
+---
+- name: Installing zola
+  aur:
+    name: 'zola-bin'
+    skip_installed: yes

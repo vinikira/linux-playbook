@@ -1,3 +1,4 @@
 ---
 - include: asdf.yml
 - include: docker.yml
+- include: zola.yml
