@@ -1,4 +1,6 @@
 ---
+- include: media.yml
+
 - name: Installing Telegram desktop
   pacman:
     name: ['telegram-desktop']
@@ -15,3 +17,10 @@
   aur:
     name: ['stacer-bin']
     skip_installed: yes
+
+
+- name: Instaling QBitTorrent
+  pacman:
+    name: ['qbittorrent']
+    state: present
+  become: true
