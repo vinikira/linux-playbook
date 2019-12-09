@@ -2,3 +2,7 @@
 - include: asdf.yml
 - include: docker.yml
 - include: zola.yml
+
+- name: Development tools
+  pacman:
+    name: ['jq']
