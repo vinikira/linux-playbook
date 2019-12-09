@@ -5,7 +5,22 @@
     state: present
   become: true
 
+- name: Creating MiniDLNA config folders
+  file:
+    path: '/home/{{ user_name }}/.config/minidlna'
+    state: directory
+
+- name: Creating MiniDLNA config cache folders
+  file:
+    path: '/home/{{ user_name }}/.config/minidlna/cache'
+    state: directory
+
+- name: Creating MiniDLNA pid file
+  file:
+    path: '/home/{{ user_name }}/.config/minidlna/minidlna.pid'
+    state: file
+
 - name: Configuring MiniDLNA Server
-  copy:
+  template:
     src: '../files/minidlna.conf'
     dest: '/home/{{ user_name }}/.config/minidlna/minidlna.conf'
