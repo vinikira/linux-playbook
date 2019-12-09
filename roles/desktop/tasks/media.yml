@@ -1,0 +1,11 @@
+---
+- name: Installing media packages
+  pacman:
+    name: ['vlc', 'minidlna']
+    state: present
+  become: true
+
+- name: Configuring MiniDLNA Server
+  copy:
+    src: '../files/minidlna.conf'
+    dest: '/home/{{ user_name }}/.config/minidlna/minidlna.conf'
