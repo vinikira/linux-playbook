@@ -18,7 +18,7 @@
 - name: Creating MiniDLNA pid file
   file:
     path: '/home/{{ user_name }}/.config/minidlna/minidlna.pid'
-    state: file
+    state: touch
 
 - name: Configuring MiniDLNA Server
   template:
