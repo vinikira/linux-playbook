@@ -10,7 +10,7 @@
 
 - name: CLI Utils
   pacman:
-    name: ['ripgrep', 'bat', 'tmux']
+    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools']
     state: present
   become: true
 
