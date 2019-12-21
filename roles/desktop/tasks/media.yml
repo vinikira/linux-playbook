@@ -24,3 +24,10 @@
   template:
     src: '../files/minidlna.conf'
     dest: '/home/{{ user_name }}/.config/minidlna/minidlna.conf'
+    force: no
+
+- name: Installing OBS Studio
+  pacman:
+    name: ['obs-studio']
+    state: present
+  become: true
