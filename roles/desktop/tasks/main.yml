@@ -24,3 +24,9 @@
     name: ['qbittorrent']
     state: present
   become: true
+
+- name: Instaling Flameshot
+  pacman:
+    name: ['flameshot']
+    state: present
+  become: true
