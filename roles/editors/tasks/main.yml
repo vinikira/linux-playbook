@@ -1,2 +1,8 @@
 ---
 - include: emacs.yml
+
+- name: Micro editor
+  pacman:
+    name: ['micro']
+    state: present
+  become: true

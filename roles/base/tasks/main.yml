@@ -4,7 +4,7 @@
 
 - name: Custom Fonts
   pacman:
-    name: ['ttf-fira-code']
+    name: ['ttf-fira-code', 'ttf-jetbrains-mono']
     state: present
   become: true
 
