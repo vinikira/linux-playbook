@@ -24,3 +24,8 @@
     state: started
     enabled: yes
     scope: user
+
+- name: Copy emacsclient.desktop
+  copy:
+    src: '../files/emacsclient.desktop'
+    dest: '/home/{{ user_name }}/.local/share/applications/'
