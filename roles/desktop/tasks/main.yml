@@ -14,8 +14,8 @@
   become: true
 
 - name: Instaling Stacer
-  aur:
-    name: ['stacer-bin']
+  package:
+    name: ['stacer']
     skip_installed: yes
 
 - name: Instaling QBitTorrent

@@ -2,8 +2,6 @@
 
 sudo pacman -Syy yay git ansible --noconfirm
 
-git clone https://github.com/kewlfft/ansible-aur.git ~/.ansible/plugins/modules/aur
-
 mkdir ~/git
 
 git clone http://github.com/vinikira/manjaro-playbook ~/git/manjaro-playbook/
