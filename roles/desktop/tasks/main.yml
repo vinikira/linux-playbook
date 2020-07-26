@@ -2,13 +2,13 @@
 - include: media.yml
 
 - name: Installing Telegram desktop
-  pacman:
+  package:
     name: ['telegram-desktop']
     state: present
   become: true
 
 - name: Instaling Chromium
-  pacman:
+  package:
     name: ['chromium']
     state: present
   become: true
@@ -19,13 +19,13 @@
     skip_installed: yes
 
 - name: Instaling QBitTorrent
-  pacman:
+  package:
     name: ['qbittorrent']
     state: present
   become: true
 
 - name: Instaling Flameshot
-  pacman:
+  package:
     name: ['flameshot']
     state: present
   become: true

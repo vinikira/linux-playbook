@@ -1,6 +1,6 @@
 ---
 - name: Installing Syncthing
-  pacman:
+  package:
     name: ['syncthing']
     state: present
   become: true

@@ -3,19 +3,19 @@
 - include: dot-files.yml
 
 - name: Custom Fonts
-  pacman:
+  package:
     name: ['ttf-fira-code', 'ttf-jetbrains-mono']
     state: present
   become: true
 
 - name: CLI Utils
-  pacman:
+  package:
     name: ['ripgrep', 'bat', 'tmux', 'inotify-tools']
     state: present
   become: true
 
 - name: ASPELL
-  pacman:
+  package:
     name: ['aspell', 'aspell-en', 'aspell-pt']
     state: present
   become: true

@@ -1,6 +1,6 @@
 ---
 - name: Installing media packages
-  pacman:
+  package:
     name: ['vlc', 'minidlna']
     state: present
   become: true
@@ -27,7 +27,7 @@
     force: no
 
 - name: Installing OBS Studio
-  pacman:
+  package:
     name: ['obs-studio']
     state: present
   become: true

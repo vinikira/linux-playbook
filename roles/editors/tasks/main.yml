@@ -2,7 +2,7 @@
 - include: emacs.yml
 
 - name: Micro editor
-  pacman:
+  package:
     name: ['micro']
     state: present
   become: true

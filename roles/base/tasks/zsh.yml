@@ -1,6 +1,6 @@
 ---
 - name: Installing ZSH
-  pacman:
+  package:
     name: zsh
     state: present
   become_user: '{{ user_name }}'

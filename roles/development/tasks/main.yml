@@ -4,5 +4,5 @@
 - include: zola.yml
 
 - name: Development tools
-  pacman:
+  package:
     name: ['jq']
