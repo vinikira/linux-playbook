@@ -10,18 +10,12 @@
 
 - name: CLI Utils
   package:
-    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools', 'htop', ]
+    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools', 'htop']
     state: present
   become: true
 
 - name: ASPELL
   package:
     name: ['aspell', 'aspell-en', 'aspell-pt']
-    state: present
-  become: true
-
-- name: Nuspell
-  package:
-    name: ['nuspell', 'enchant']
     state: present
   become: true
