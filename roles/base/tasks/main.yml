@@ -10,7 +10,7 @@
 
 - name: CLI Utils
   package:
-    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools', 'htop']
+    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools', 'htop', 'pass']
     state: present
   become: true
 
