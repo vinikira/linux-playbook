@@ -1,0 +1,6 @@
+---
+- name: Brave browser
+  package:
+    name: ['brave']
+    state: present
+  become: true
