@@ -1,8 +1,2 @@
 ---
 - include: emacs.yml
-
-- name: Micro editor
-  package:
-    name: ['micro']
-    state: present
-  become: true

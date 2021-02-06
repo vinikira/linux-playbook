@@ -8,16 +8,6 @@
 - name: Summoning Emacs config
   shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/emacs'
 
-- name: Removing init.elc
-  file:
-    state: absent
-    path: '/home/{{ user_name }}/.emacs.d/init.elc'
-
-- name: Copying init.el
-  copy:
-    src: '../files/init.el'
-    dest: '/home/{{ user_name }}/.emacs.d/'
-
 - name: Active Emacs daemon on Systemd (user)
   systemd:
     name: emacs

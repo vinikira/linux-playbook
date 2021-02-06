@@ -5,4 +5,6 @@
 
 - name: Development tools
   package:
-    name: ['jq']
+    name: ['jq', 'xmllint']
+    state: present
+  become: true
