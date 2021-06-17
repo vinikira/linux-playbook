@@ -18,4 +18,6 @@
   shell: 'bash /home/{{ user_name }}/.asdf/bin/asdf plugin-add nodejs'
 
 - name: Importing Node.js release team's OpenPGP keys
-  shell: 'bash /home/{{ user_name }}/.asdf/plugins/nodejs/bin/import-release-team-keyring'
+  shell: >
+    bash -c
+    '${ASDF_DATA_DIR:=$HOME/.asdf}/plugins/nodejs/bin/import-previous-release-team-keyring'

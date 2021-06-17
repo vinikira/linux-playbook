@@ -2,24 +2,29 @@
 - name: Fetching dot-files
   git:
     repo: 'https://github.com/vinikira/dot-files'
-    dest: '/home/{{ user_name }}/git/dot-files'
+    dest: '/home/{{ user_name }}/git/github/vinikira/dot-files'
     update: no
 
 - name: Fetching Summon
   git:
     repo: 'https://gitlab.com/semente/summon'
-    dest: '/home/{{ user_name }}/git/summon'
-    update: no
+    dest: '/home/{{ user_name }}/git/gitlab/semente/summon'
 
 - name: Given access to summon
   file:
-    path: '/home/{{ user_name }}/git/summon/summon.sh'
+    path: '/home/{{ user_name }}/git/gitlab/semente/summon/summon.sh'
     owner: '{{ user_name }}'
     group: '{{ user_name }}'
     mode: 0755
 
+- name: Create link summon
+  file:
+    src: '/home/{{ user_name }}/git/gitlab/semente/summon/summon.sh'
+    dest: '/home/{{ user_name }}/.local/bin'
+    state: link
+
 - name: Summoning ZSH dot-files
-  shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/zsh'
+  shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/zsh'
 
 - name: Summoning bin dot-files
-  shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/bin'
+  shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/bin'

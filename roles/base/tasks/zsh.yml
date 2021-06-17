@@ -3,8 +3,10 @@
   package:
     name: zsh
     state: present
-  become_user: '{{ user_name }}'
   become: yes
+  tags:
+    - ubuntu
+    - arch
 
 - stat:
     path: '/home/{{ user_name }}/.oh-my-zsh/'

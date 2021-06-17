@@ -1,6 +1,40 @@
 ---
-- name: Brave browser
+- name: Install Brave browser
   package:
-    name: ['brave']
+    name:
+      - brave
     state: present
   become: true
+  tags:
+    - arch
+
+- name: Add PPA Brave browser
+  command: >
+    echo "deb [arch=amd64]
+    https://brave-browser-apt-release.s3.brave.com/ $UBUNTU_CODENAME
+    main" | sudo tee /etc/apt/sources.list.d/brave-browser-release
+    -${UBUNTU_CODENAME}.list
+  tags:
+    - ubuntu
+
+- name: Import Brave key
+  command: >
+    wget -q -O -
+    https://brave-browser-apt-release.s3.brave.com/brave-core.asc |
+    sudo apt-key add -
+  tags:
+    - ubuntu
+
+- name: Update apt
+  command: apt update
+  tags:
+    - ubuntu
+
+- name: Install Brave browser
+  package:
+    name:
+      - brave-browser
+    state: present
+  become: true
+  tags:
+    - ubuntu

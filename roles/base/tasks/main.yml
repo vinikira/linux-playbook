@@ -2,20 +2,46 @@
 - include: zsh.yml
 - include: dot-files.yml
 
-- name: Custom Fonts
+- name: common packages
   package:
-    name: ['ttf-fira-code', 'ttf-jetbrains-mono']
+    name:
+      - aspell
+      - aspell-en
+      - aspell-pt
+      - ripgrep
+      - bat
+      - tmux
+      - htop
+      - pass
+      - wget
+      - git
+      - curl
     state: present
   become: true
+  tags:
+    - ubuntu
+    - arch
 
-- name: CLI Utils
+- name: arch packages
   package:
-    name: ['ripgrep', 'bat', 'tmux', 'inotify-tools', 'htop', 'pass', 'fd']
+    name:
+      - ttf-fira-code
+      - ttf-jetbrains-mono
+      - inotify-tools
+      - fd
+      - yay
+      - paru
     state: present
   become: true
+  tags:
+    - arch
 
-- name: ASPELL
+- name: ubuntu packages
   package:
-    name: ['aspell', 'aspell-en', 'aspell-pt']
+    name:
+      - fonts-firacode
+      - fd-find
     state: present
   become: true
+  tags:
+    - ubuntu

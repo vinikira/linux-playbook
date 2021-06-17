@@ -1,9 +1,14 @@
 ---
 - name: Installing Docker and docker-compose
   pacman:
-    name: ['docker', 'docker-compose']
+    name:
+      - docker
+      - docker-compose
     state: present
   become: true
+  tags:
+    - ubuntu
+    - arch
 
 - name: 'Adding user to docker group'
   user:

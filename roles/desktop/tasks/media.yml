@@ -1,9 +1,16 @@
 ---
 - name: Installing media packages
   package:
-    name: ['vlc', 'minidlna']
+    name:
+      - vlc
+      - minidlna
+      - mpv
+      - obs-studio
     state: present
   become: true
+  tags:
+    - ubuntu
+    - arch
 
 - name: Creating MiniDLNA config folders
   file:
@@ -25,9 +32,3 @@
     src: '../files/minidlna.conf'
     dest: '/home/{{ user_name }}/.config/minidlna/minidlna.conf'
     force: no
-
-- name: Installing OBS Studio
-  package:
-    name: ['obs-studio']
-    state: present
-  become: true

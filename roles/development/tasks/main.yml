@@ -3,8 +3,22 @@
 - include: docker.yml
 - include: zola.yml
 
-- name: Development tools
+- name: Arch Development tools
   package:
-    name: ['jq', 'xmllint']
+    name:
+      - jq
+      - xmllint
     state: present
   become: true
+  tags:
+    - arch
+
+- name: Ubuntu Development tools
+  package:
+    name:
+      - jq
+      - libxml2-utils
+    state: present
+  become: true
+  tags:
+    - ubuntu

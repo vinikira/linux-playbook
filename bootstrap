@@ -4,9 +4,9 @@ sudo pacman -Syy yay git ansible --noconfirm
 
 mkdir ~/git
 
-git clone http://github.com/vinikira/manjaro-playbook ~/git/manjaro-playbook/
+git clone http://github.com/vinikira/manjaro-playbook ~/git/github/vinikira/manjaro-playbook/
 
-cd ~/git/manjaro-playbook/
+cd ~/git/github/vinikira/manjaro-playbook/
 
 read -p "Type the user name: " user_name
 

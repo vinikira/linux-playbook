@@ -3,3 +3,5 @@
   package:
     name: 'zola'
     skip_installed: yes
+  tags:
+    - arch

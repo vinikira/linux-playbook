@@ -1,12 +1,22 @@
 ---
 - name: Installing Emacs
   package:
+    name: emacs-gcc-wayland-devel-bin
+    state: present
+  become: true
+  tags:
+    - arch
+
+- name: Installing Emacs
+  package:
     name: emacs
     state: present
   become: true
+  tags:
+    - ubuntu
 
 - name: Summoning Emacs config
-  shell: 'sh /home/{{ user_name }}/git/summon/summon.sh /home/{{ user_name }}/git/dot-files/common/emacs'
+  shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/emacs'
 
 - name: Active Emacs daemon on Systemd (user)
   systemd:

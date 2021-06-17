@@ -1,31 +1,15 @@
 ---
 - include: media.yml
+- include: browser.yml
 
-- name: Installing Telegram desktop
+- name: Common packages
   package:
-    name: ['telegram-desktop']
+    name:
+      - telegram-desktop
+      - stacer
+      - flameshot
     state: present
   become: true
-
-- name: Instaling Chromium
-  package:
-    name: ['chromium']
-    state: present
-  become: true
-
-- name: Instaling Stacer
-  package:
-    name: ['stacer']
-    skip_installed: yes
-
-- name: Instaling QBitTorrent
-  package:
-    name: ['qbittorrent']
-    state: present
-  become: true
-
-- name: Instaling Flameshot
-  package:
-    name: ['flameshot']
-    state: present
-  become: true
+  tags:
+    - ubuntu
+    - arch
