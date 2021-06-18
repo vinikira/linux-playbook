@@ -1,4 +1,12 @@
 ---
+- name: Dependencies for Erlang
+  tags: ubuntu
+  package:
+    name:
+      - libssl-dev
+      - libncurses5-dev
+  become: true
+
 - name: Install elixir ls
   tags: always
   block:

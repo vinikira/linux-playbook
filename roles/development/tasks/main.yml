@@ -4,7 +4,7 @@
 - include: zola.yml
 - include: emacs.yml
 - include: ngrok.yml
-- include: elixir_ls.yml
+- include: elixir.yml
 
 - name: Arch Development tools
   package:
