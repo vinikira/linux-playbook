@@ -1,6 +1,9 @@
 ---
 - include: zsh.yml
 - include: dot-files.yml
+- include: vault.yml
+- include: syncthing.yml
+- include: tmux.yml
 
 - name: common packages
   package:
@@ -8,19 +11,17 @@
       - aspell
       - aspell-en
       - aspell-pt
-      - ripgrep
+      # - ripgrep
       - bat
-      - tmux
       - htop
       - pass
       - wget
       - git
       - curl
+      - unzip
     state: present
   become: true
-  tags:
-    - ubuntu
-    - arch
+  tags: always
 
 - name: arch packages
   package:
@@ -28,9 +29,11 @@
       - ttf-fira-code
       - ttf-jetbrains-mono
       - inotify-tools
+      - tmux
       - fd
       - yay
       - paru
+      - pandoc-bin
     state: present
   become: true
   tags:
@@ -41,6 +44,10 @@
     name:
       - fonts-firacode
       - fd-find
+      - texlive
+      - texlive-latex-extra
+      - texlive-publishers
+      - pandoc
     state: present
   become: true
   tags:

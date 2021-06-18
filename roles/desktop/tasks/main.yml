@@ -10,6 +10,15 @@
       - flameshot
     state: present
   become: true
-  tags:
-    - ubuntu
-    - arch
+  tags: always
+
+- name: Swith workspace with super + 1-9 on Gnome
+  shell: |
+    for i in {1..9}; do
+      gsettings set "org.gnome.shell.extensions.dash-to-dock" "app-hotkey-$i" "[]"
+      gsettings set "org.gnome.shell.keybindings" "switch-to-application-$i" "[]"
+      gsettings set "org.gnome.desktop.wm.keybindings" "switch-to-workspace-$i" "['<Super>$i']"
+    done
+  args:
+    executable: /bin/bash
+  tags: always

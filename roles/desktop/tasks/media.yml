@@ -8,9 +8,7 @@
       - obs-studio
     state: present
   become: true
-  tags:
-    - ubuntu
-    - arch
+  tags: always
 
 - name: Creating MiniDLNA config folders
   file:

@@ -2,12 +2,16 @@
 - include: asdf.yml
 - include: docker.yml
 - include: zola.yml
+- include: emacs.yml
+- include: ngrok.yml
+- include: elixir_ls.yml
 
 - name: Arch Development tools
   package:
     name:
       - jq
       - xmllint
+      - cmake
     state: present
   become: true
   tags:
@@ -18,6 +22,7 @@
     name:
       - jq
       - libxml2-utils
+      - cmake
     state: present
   become: true
   tags:
