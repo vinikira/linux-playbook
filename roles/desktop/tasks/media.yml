@@ -6,6 +6,7 @@
       - minidlna
       - mpv
       - obs-studio
+      - audacity
     state: present
   become: true
   tags: always
