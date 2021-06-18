@@ -1,0 +1,22 @@
+---
+- name: Install elixir ls
+  tags: always
+  block:
+  - name: Ensure folder
+    file:
+      path: '/home/{{ user_name }}/.local/opt/elixir_ls'
+      state: directory
+
+  - name: Get latest version
+    shell: |
+      curl https://api.github.com/repos/elixir-lsp/elixir-ls/releases/latest | jq -r .tag_name
+    register: elixir_ls
+    ignore_errors: true
+
+  - name: Get latest release
+    shell:
+      chdir: '/home/{{ user_name }}/.local/opt/elixir_ls'
+      cmd: |
+        wget https://github.com/elixir-lsp/elixir-ls/releases/download/{{ elixir_ls.stdout }}/elixir-ls.zip
+        unzip elixir-ls.zip
+        rm elixir-ls.zip

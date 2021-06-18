@@ -3,5 +3,4 @@
   roles:
     - { role: base, tags: ['base'] }
     - { role: desktop, tags: ['desktop'] }
-    - { role: editors, tags: ['editors'] }
     - { role: development, tags: ['development'] }

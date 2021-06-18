@@ -1,13 +1,16 @@
 #!/usr/bin/env bash
 
-sudo pacman -Syy yay git ansible --noconfirm
+which pacman 2>/dev/null || sudo pacman -Syy yay git ansible --noconfirm
 
-mkdir ~/git
+which apt 2>/dev/null || sudo apt install git ansible -y
 
-git clone http://github.com/vinikira/manjaro-playbook ~/git/github/vinikira/manjaro-playbook/
+mkdir ~/git/github
 
-cd ~/git/github/vinikira/manjaro-playbook/
+git clone git@github.com:vinikira/linux-playbook.git ~/git/github/vinikira/linux-playbook/
 
-read -p "Type the user name: " user_name
+cd ~/git/github/vinikira/linux-playbook/ || exit
 
-ansible-playbook playbook.yml --extra-vars="user_name=${user_name}" --ask-become-pass
+read -r -p "Type the user name: " user_name
+read -r -p "Type the system tag (ubuntu arch): " system_tag
+
+ansible-playbook playbook.yml --extra-vars="user_name=${user_name}" --ask-become-pass --tags "$system_tag"

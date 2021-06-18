@@ -1,0 +1,42 @@
+---
+- name: check if tmux is installed
+  stat:
+    path: "/usr/local/bin/tmux"
+  register: tmux
+  changed_when: not tmux.stat.exists
+  tags: always
+
+- name: Tmux 3.2 for Ubuntu
+  tags: ubuntu
+  when: tmux.changed
+  block:
+    - name: Clone Tmux source code
+      git:
+        repo: git@github.com:tmux/tmux
+        dest: '/home/{{ user_name }}/git/github/tmux/tmux'
+
+    - name: Install dependencies
+      package:
+        name:
+          - libevent-2.1-7
+          - libevent-dev
+          - ncurses-dev
+          - build-essential
+          - bison
+          - pkg-config
+          - ncurses-bin
+      become: true
+
+    - name: Build
+      shell:
+        chdir: '/home/{{ user_name }}/git/github/tmux/tmux'
+        cmd: |
+          ./autogen.sh
+          ./configure
+          make
+
+    - name: Install
+      become: true
+      shell:
+        chdir: '/home/{{ user_name }}/git/github/tmux/tmux'
+        cmd: make install

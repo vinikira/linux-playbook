@@ -1,0 +1,105 @@
+---
+- name: Check if Emacs is installed
+  stat:
+    path: "/usr/bin/emacs"
+  register: emacs
+  changed_when: not emacs.stat.exists
+  tags: always
+
+- name: Installing Emacs
+  package:
+    name: emacs-gcc-wayland-devel-bin
+    state: present
+  become: true
+  tags:
+    - arch
+
+- name: Building Emacs GCC with Native GTK on Ubuntu
+  tags: ubuntu
+  when: emacs.changed
+  block:
+  - name: Cloning Emacs
+    git:
+      repo: git://github.com/flatwhatson/emacs.git
+      dest: '/home/{{ user_name }}/git/github/flatwhatson/emacs/'
+      version: pgtk-nativecomp
+      update: no
+
+  - name: Install dependencies to build Emacs
+    package:
+      name:
+        - build-essential
+        - texinfo
+        - libx11-dev
+        - libxpm-dev
+        - libjpeg-dev
+        - libpng-dev
+        - libgif-dev
+        - libtiff-dev
+        - libgtk2.0-dev
+        - libncurses-dev
+        - gnutls-dev
+        - libgtk-3-dev
+        - libgccjit-9-dev
+        - libgccjit0
+        - libjansson4
+        - libjansson-dev
+        - libwebkit2gtk-4.0-dev
+    become: true
+
+  - name: Build Emacs
+    shell: |
+     cd /home/{{ user_name }}/git/github/flatwhatson/emacs/
+     export LD="/usr/bin/ld.gold"
+     export CFLAGS=" -g -fuse-ld=gold -O3 -mtune=native -march=native -fomit-frame-pointer"
+     export CXXFLAGS=" -g -fuse-ld=gold -O3 -mtune=native -march=native -fomit-frame-pointer"
+     export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:/usr/share/pkgconfig
+     ./autogen.sh
+     ./autogen.sh autoconf
+     local _conf=(
+        --prefix=/usr
+        --sysconfdir=/etc
+        --libexecdir=/usr/lib
+        --localstatedir=/var
+        --mandir=/usr/share/man
+        --with-gameuser=:games
+        --with-modules
+        --with-x-toolkit=gtk3
+        --with-cairo
+        --with-xwidgets
+        --with-native-compilation
+        --with-pgtk
+        --without-compress-install
+        --without-gconf
+        --without-gsettings
+        --without-m17n-flt
+        --enable-autodepend
+        --enable-link-time-optimization
+        --with-mailutils
+      )
+      ./configure "${_conf[@]}"
+      make -j$(nproc) NATIVE_FAST_BOOT=1
+
+  - name: Install Emacs
+    shell: |
+      cd /home/{{ user_name }}/git/github/flatwhatson/emacs/
+      make install
+    become: true
+
+- name: Summoning Emacs config
+  shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/emacs'
+  tags: always
+
+- name: Active Emacs daemon on Systemd (user)
+  systemd:
+    name: emacs
+    state: started
+    enabled: yes
+    scope: user
+  tags: always
+
+- name: Copy emacsclient.desktop
+  copy:
+    src: '../files/emacsclient.desktop'
+    dest: '/home/{{ user_name }}/.local/share/applications/'
+  tags: always
