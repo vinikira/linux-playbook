@@ -12,6 +12,7 @@
       - jq
       - xmllint
       - cmake
+      - postgresql-libs
     state: present
   become: true
   tags:
@@ -23,6 +24,7 @@
       - jq
       - libxml2-utils
       - cmake
+      - postgresql-client
     state: present
   become: true
   tags:
