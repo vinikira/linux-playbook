@@ -4,11 +4,10 @@
     path: "/usr/local/bin/tmux"
   register: tmux
   changed_when: not tmux.stat.exists
-  tags: always
 
 - name: Tmux 3.2 for Ubuntu
   tags: ubuntu
-  when: tmux.changed
+  when: tmux.changed and ansible_facts['os_family'] == 'Ubuntu'
   block:
     - name: Clone Tmux source code
       git:

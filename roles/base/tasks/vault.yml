@@ -4,4 +4,3 @@
     repo: 'git@github.com:vinikira/vault.git'
     dest: '/home/{{ user_name }}/.password-store'
     update: no
-  tags: always

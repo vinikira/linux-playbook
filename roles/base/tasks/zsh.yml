@@ -4,23 +4,17 @@
     name: zsh
     state: present
   become: yes
-  tags: always
 
 - stat:
     path: '/home/{{ user_name }}/.oh-my-zsh/'
   register: oh_myzsh
-  tags:
-    - ubuntu
-    - arch
 
 - name: Installing Oh My ZSH
   shell: 'sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"'
   when: oh_myzsh.stat.exists == false
-  tags: always
 
 - name: Set ZSH as default shell
   user:
     name: '{{ user_name }}'
     shell: /usr/bin/zsh
   become: true
-  tags: always

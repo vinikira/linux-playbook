@@ -10,13 +10,12 @@
   package:
     name:
       - jq
-      - xmllint
+      - libxml2
       - cmake
       - postgresql-libs
     state: present
   become: true
-  tags:
-    - arch
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: Ubuntu Development tools
   package:
@@ -27,5 +26,4 @@
       - postgresql-client
     state: present
   become: true
-  tags:
-    - ubuntu
+  when: ansible_facts['os_family'] == 'Ubuntu'

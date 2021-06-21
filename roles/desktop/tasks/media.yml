@@ -9,7 +9,6 @@
       - audacity
     state: present
   become: true
-  tags: always
 
 - name: Creating MiniDLNA config folders
   file:

@@ -4,81 +4,61 @@
     path: /usr/bin/brave-browser
   register: brave
   changed_when: not brave.stat.exists
-  tags:
-    - ubuntu
 
-- name: Install Brave browser
-  package:
-    name:
-      - brave
-      - browserpass
-    state: present
-  become: true
-  when: brave.changed
-  tags:
-    - arch
+- name: Brave Arch
+  when: brave.changed and ansible_facts['os_family'] == 'Archlinux'
+  block:
+  - name: Install Brave browser
+    package:
+      name:
+        - brave
+        - browserpass
+      state: present
+    become: true
 
-- name: Add PPA Brave browser
-  shell: >
-    echo "deb
-    [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg
-    arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable
-    main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-  when: brave.changed
-  tags:
-    - ubuntu
+  - name: Browser Pass
+    make:
+      chdir: /usr/lib/browserpass
+      target: hosts-brave-user
 
-- name: Brave deps
-  package:
-    name:
-      - curl
-      - apt-transport-https
-    state: present
-  become: true
-  when: brave.changed
-  tags:
-   - ubuntu
+- name: Brave Ubuntu
+  when: brave.changed and ansible_facts['os_family'] == 'Ubuntu'
+  block:
+  - name: Add PPA Brave browser
+    shell: >
+      echo "deb
+      [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg
+      arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable
+      main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
 
-- name: Import Brave key
-  shell: >
-    curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg
-    https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-  become: true
-  when: brave.changed
-  tags:
-    - ubuntu
+  - name: Brave deps
+    package:
+      name:
+        - curl
+        - apt-transport-https
+      state: present
+    become: true
 
-- name: Update apt
-  shell: apt update
-  become: true
-  when: brave.changed
-  tags:
-    - ubuntu
+  - name: Import Brave key
+    shell: >
+      curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg
+      https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+    become: true
 
-- name: Install Brave browser
-  package:
-    name:
-      - brave-browser
-      - webext-browserpass
-    state: present
-  when: brave.changed
-  become: true
-  tags:
-    - ubuntu
+  - name: Update apt
+    shell: apt update
+    become: true
 
-- name: Browser Pass
-  make:
-    chdir: /usr/lib/browserpass
-    target: hosts-brave-user
-  when: brave.changed
-  tags:
-    - arch
+  - name: Install Brave browser
+    package:
+      name:
+        - brave-browser
+        - webext-browserpass
+      state: present
+    become: true
 
-- name: Browser Pass
-  file:
-    src: /etc/chromium/native-messaging-hosts/com.github.browserpass.native.json
-    dest: /home/{{ user_name }}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/com.github.browserpass.native.json
-    state: link
-  when: brave.changed
-  tags:
-    - ubuntu
+  - name: Browser Pass
+    file:
+      src: /etc/chromium/native-messaging-hosts/com.github.browserpass.native.json
+      dest: /home/{{ user_name }}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/com.github.browserpass.native.json
+      state: link

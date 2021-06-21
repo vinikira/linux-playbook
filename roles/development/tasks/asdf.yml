@@ -4,10 +4,8 @@
     path: "/home/{{ user_name}}/.asdf"
   register: asdf
   changed_when: not asdf.stat.exists
-  tags: always
 
 - name: ASDF tasks
-  tags: always
   when: asdf.changed
   block:
   - name: Installing asdf.vm

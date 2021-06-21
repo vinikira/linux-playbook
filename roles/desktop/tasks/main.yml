@@ -10,7 +10,6 @@
       - flameshot
     state: present
   become: true
-  tags: always
 
 - name: Swith workspace with super + 1-9 on Gnome
   shell: |
@@ -21,4 +20,3 @@
     done
   args:
     executable: /bin/bash
-  tags: always

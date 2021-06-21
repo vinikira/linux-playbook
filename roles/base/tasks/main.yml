@@ -11,7 +11,7 @@
       - aspell
       - aspell-en
       - aspell-pt
-      # - ripgrep
+      - ripgrep
       - bat
       - htop
       - pass
@@ -21,7 +21,6 @@
       - unzip
     state: present
   become: true
-  tags: always
 
 - name: arch packages
   package:
@@ -32,12 +31,18 @@
       - tmux
       - fd
       - yay
-      - paru
-      - pandoc-bin
     state: present
   become: true
-  tags:
-    - arch
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: arch AUR packages
+  shell: |
+     yay -Qi {{ item }} 2>/dev/null || sudo -u {{ user_name }} yay -S {{ item }} --noconfirm
+  with_items:
+    - paru-bin
+    - pandoc-bin
+  become: true
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: ubuntu packages
   package:
@@ -50,5 +55,4 @@
       - pandoc
     state: present
   become: true
-  tags:
-    - ubuntu
+  when: ansible_facts['os_family'] == 'Ubuntu'

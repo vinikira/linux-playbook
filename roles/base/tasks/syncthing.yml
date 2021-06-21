@@ -5,9 +5,6 @@
       - syncthing
     state: present
   become: true
-  tags:
-    - arch
-    - ubuntu
 
 - name: Start and enable Syncthing service
   systemd:
@@ -15,7 +12,6 @@
     state: started
     enabled: yes
     scope: user
-  tags: always
 
 - name: Allow port used by Syncthing
   ufw:
@@ -23,4 +19,3 @@
     port: 22000
     proto: tcp
   become: true
-  tags: always

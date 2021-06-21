@@ -4,19 +4,16 @@
     path: "/usr/bin/emacs"
   register: emacs
   changed_when: not emacs.stat.exists
-  tags: always
 
 - name: Installing Emacs
   package:
     name: emacs-gcc-wayland-devel-bin
     state: present
   become: true
-  tags:
-    - arch
+  when: emacs.changed and ansible_facts['os_family'] == 'Archlinux'
 
 - name: Building Emacs GCC with Native GTK on Ubuntu
-  tags: ubuntu
-  when: emacs.changed
+  when: emacs.changed and ansible_facts['os_family'] == 'Ubuntu'
   block:
   - name: Cloning Emacs
     git:
@@ -88,7 +85,6 @@
 
 - name: Summoning Emacs config
   shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/emacs'
-  tags: always
 
 - name: Active Emacs daemon on Systemd (user)
   systemd:
@@ -96,10 +92,8 @@
     state: started
     enabled: yes
     scope: user
-  tags: always
 
 - name: Copy emacsclient.desktop
   copy:
     src: '../files/emacsclient.desktop'
     dest: '/home/{{ user_name }}/.local/share/applications/'
-  tags: always

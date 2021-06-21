@@ -1,6 +1,5 @@
 ---
 - name: Install docker
-  tags: always
   block:
   - name: Installing Docker and docker-compose
     package:
@@ -16,9 +15,9 @@
       state: started
       enabled: yes
 
-  - name: 'Adding user to docker group'
+  - name: Adding user to docker group
     user:
       name: '{{ user_name }}'
-      group: docker
+      groups: docker
       append: yes
     become: true

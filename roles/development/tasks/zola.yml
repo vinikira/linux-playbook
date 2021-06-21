@@ -1,7 +1,5 @@
 ---
 - name: Installing zola
   package:
-    name: 'zola'
-    skip_installed: yes
-  tags:
-    - arch
+    name: zola
+  when: ansible_facts['os_family'] == 'Archlinux'

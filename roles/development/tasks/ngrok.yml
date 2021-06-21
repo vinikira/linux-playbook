@@ -4,7 +4,6 @@
     path: "/home/{{ user_name}}/.local/bin/ngrok"
   register: ngrok
   changed_when: not ngrok.stat.exists
-  tags: always
 
 - name: Install Ngrok
   when: ngrok.changed
@@ -14,4 +13,3 @@
       unzip ngrok-stable-linux-amd64.zip
       rm ngrok-stable-linux-amd64.zip
     chdir: '/home/{{ user_name }}/.local/bin'
-  tags: always

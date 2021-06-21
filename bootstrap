@@ -11,6 +11,15 @@ git clone git@github.com:vinikira/linux-playbook.git ~/git/github/vinikira/linux
 cd ~/git/github/vinikira/linux-playbook/ || exit
 
 read -r -p "Type the user name: " user_name
-read -r -p "Type the system tag (ubuntu arch): " system_tag
+read -r -p "Type the tag (empty for all): " tag
 
-ansible-playbook playbook.yml --extra-vars="user_name=${user_name}" --ask-become-pass --tags "$system_tag"
+_options=(
+    --extra-vars="user_name=${user_name}"
+    --ask-become-pass
+)
+
+if [ -n "$tag" ]; then
+    _options+=(--tags "$tag")
+fi
+
+ansible-playbook playbook.yml "${_options[@]}"

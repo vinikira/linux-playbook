@@ -4,13 +4,11 @@
     repo: 'git@github.com:vinikira/dot-files.git'
     dest: '/home/{{ user_name }}/git/github/vinikira/dot-files'
     update: no
-  tags: always
 
 - name: Fetching Summon
   git:
     repo: 'https://gitlab.com/semente/summon'
     dest: '/home/{{ user_name }}/git/gitlab/semente/summon'
-  tags: always
 
 - name: Given access to summon
   file:
@@ -18,7 +16,6 @@
     owner: '{{ user_name }}'
     group: '{{ user_name }}'
     mode: 0755
-  tags: always
 
 - name: Make .local directories
   file:
@@ -27,14 +24,12 @@
   with_items:
     - '/home/{{ user_name }}/.local/bin'
     - '/home/{{ user_name }}/.local/opt'
-  tags: always
 
 - name: Create link summon
   file:
     src: '/home/{{ user_name }}/git/gitlab/semente/summon/summon.sh'
     dest: '/home/{{ user_name }}/.local/bin/summon.sh'
     state: link
-  tags: always
 
 - name: Summoning dot-files
   shell: 'bash /home/{{ user_name }}/.local/bin/summon.sh /home/{{ user_name }}/git/github/vinikira/dot-files/common/{{ item }}'
@@ -46,4 +41,3 @@
     - htop
     - mail
     - tmux
-  tags: always

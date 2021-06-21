@@ -1,6 +1,6 @@
 ---
 - name: Dependencies for Erlang
-  tags: ubuntu
+  when: ansible_facts['os_family'] == 'Ubuntu'
   package:
     name:
       - libssl-dev
@@ -23,7 +23,6 @@
   become: true
 
 - name: Install elixir ls
-  tags: always
   block:
   - name: Ensure folder
     file:
