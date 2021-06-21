@@ -6,7 +6,7 @@
 - include: ngrok.yml
 - include: elixir.yml
 
-- name: Arch Development tools
+- name: arch development tools
   package:
     name:
       - jq
@@ -17,13 +17,22 @@
   become: true
   when: ansible_facts['os_family'] == 'Archlinux'
 
-- name: Ubuntu Development tools
+- name: arch aur development tools packages
+  shell: |
+     yay -Qi {{ item }} 2>/dev/null || sudo -u {{ user_name }} yay -S {{ item }} --noconfirm
+  with_items:
+    - pgformatter-git
+  become: true
+  when: ansible_facts['os_family'] == 'Archlinux'
+
+- name: ubuntu development tools
   package:
     name:
       - jq
       - libxml2-utils
       - cmake
       - postgresql-client
+      - pgformatter
     state: present
   become: true
   when: ansible_facts['os_family'] == 'Ubuntu'
