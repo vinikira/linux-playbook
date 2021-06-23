@@ -1,0 +1,45 @@
+---
+- name: NerdFonts
+  tags: nerd_font
+  block:
+    - set_fact:
+        fonts_directory: '{{ ansible_env.HOME }}/.fonts'
+        fonts_to_download:
+          - JetBrainsMono
+          - Hack
+
+    - name: query Github API for the latest Nerd Font release
+      shell: curl -s https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest | jq -r ".tag_name"
+      args:
+        warn: false
+      register: nerd_font_release
+
+    - name: make sures ~/.fonts directory exists
+      file:
+        path: '{{ fonts_directory }}'
+        state: directory
+
+    - name: download fonts
+      get_url:
+        url: https://github.com/ryanoasis/nerd-fonts/releases/download/{{nerd_font_release.stdout}}/{{ item }}.zip
+        dest: '{{ fonts_directory }}'
+        mode: u=rw,go=r
+      with_items: '{{ fonts_to_download }}'
+      register: nerd_font_installed
+
+    - name: unzip files
+      unarchive:
+        src: '{{ item }}'
+        dest: '{{ fonts_directory }}'
+        copy: no
+      with_fileglob: '{{ fonts_directory }}/*.zip'
+
+    - name: remove zip files
+      file:
+        path: '{{fonts_directory}}/{{ item }}.zip'
+        state: absent
+      with_items: '{{ fonts_to_download }}'
+
+    - name: update font-cache
+      command: fc-cache -fv
+      when: nerd_font_installed.changed
