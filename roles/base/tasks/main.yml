@@ -4,6 +4,7 @@
 - include: vault.yml
 - include: syncthing.yml
 - include: tmux.yml
+- include: backup.yml
 
 - name: common packages
   package:
@@ -29,6 +30,7 @@
       - tmux
       - fd
       - yay
+      - restic
     state: present
   become: true
   when: ansible_facts['os_family'] == 'Archlinux'
