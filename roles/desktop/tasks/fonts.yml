@@ -5,7 +5,6 @@
     - set_fact:
         fonts_directory: '{{ ansible_env.HOME }}/.fonts'
         fonts_to_download:
-          - JetBrainsMono
           - Hack
           - Iosevka
 
