@@ -1,64 +1,63 @@
 ---
-- name: Check if Brave is installed
+- name: Check if Librewolf is installed
   stat:
-    path: /usr/bin/brave-browser
-  register: brave
-  changed_when: not brave.stat.exists
+    path: /usr/bin/librewolf
+  register: librewolf
+  changed_when: not librewolf.stat.exists
 
-- name: Brave Arch
-  when: brave.changed and ansible_facts['os_family'] == 'Archlinux'
+- name: Librewolf Arch
+  when: librewolf.changed and ansible_facts['os_family'] == 'Archlinux'
   block:
-  - name: Install Brave browser
+  - name: Install Librewolf browser
     package:
       name:
-        - brave
+        - librewolf-bin
         - browserpass
       state: present
     become: true
-
   - name: Browser Pass
     make:
       chdir: /usr/lib/browserpass
-      target: hosts-brave-user
+      target: hosts-librewolf-user
 
-- name: Brave Ubuntu
-  when: brave.changed and ansible_facts['os_family'] == 'Ubuntu'
+- name: Librewolf Ubuntu
+  when: librewolf.changed and ansible_facts['os_family'] == 'Ubuntu'
   block:
-  - name: Add PPA Brave browser
+  - name: Add PPA Librewolf browser
+    become: true
     shell: >
-      echo "deb
-      [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg
-      arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable
-      main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+      echo "deb [arch=amd64] http://deb.librewolf.net $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/librewolf.list
+      sudo wget https://deb.librewolf.net/keyring.gpg -O /etc/apt/trusted.gpg.d/librewolf.gpg
+      sudo apt update
 
-  - name: Brave deps
+  - name: Install Librewolf
     package:
-      name:
-        - curl
-        - apt-transport-https
+      name: librewolf
       state: present
     become: true
 
-  - name: Import Brave key
-    shell: >
-      curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg
-      https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-    become: true
-
-  - name: Update apt
-    shell: apt update
-    become: true
-
-  - name: Install Brave browser
+- name: Browserpass
+  block:
+  - name: Check if Browserpass is installed
+    stat:
+      path: /usr/lib/browserpass
+    register: browserpass
+    changed_when: not browserpass.stat.exists
+  - name: Install Ubuntu
+    when: browserpass.changed and ansible_facts['os_family'] == 'Ubuntu'
     package:
       name:
-        - brave-browser
         - webext-browserpass
       state: present
     become: true
-
-  - name: Browser Pass
-    file:
-      src: /etc/chromium/native-messaging-hosts/com.github.browserpass.native.json
-      dest: /home/{{ user_name }}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/com.github.browserpass.native.json
-      state: link
+  - name: Install Archlinux
+    when: browserpass.changed and ansible_facts['os_family'] == 'Archlinux'
+    package:
+      name: browserpass
+      state: present
+    become: true
+  - name: Linking Browserpass host file for Librewolf
+    when: browserpass.changed
+    make:
+      chdir: /usr/lib/browserpass
+      target: hosts-librewolf-user
