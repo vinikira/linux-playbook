@@ -19,6 +19,7 @@
       - git
       - curl
       - unzip
+      - rclone
     state: present
   become: true
 
