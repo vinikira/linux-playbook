@@ -1,6 +1,0 @@
----
-- name: Enable backup cron
-  ansible.builtin.cron:
-    name: 'vsimoes backup'
-    special_time: 'hourly'
-    job: '/home/{{ user_name }}/.local/bin/vsimoes-backup.sh'

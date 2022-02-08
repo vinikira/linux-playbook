@@ -4,7 +4,6 @@
 - include: vault.yml
 - include: syncthing.yml
 - include: tmux.yml
-- include: backup.yml
 
 - name: common packages
   package:
