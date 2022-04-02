@@ -1,0 +1,92 @@
+---
+- name: Install packages
+  tags:
+    - sway
+    - never
+  package:
+    name:
+      - foot
+      - grim
+      - mako
+      - swayidle
+      - swaylock
+      - waybar
+      - slurp
+      - sway
+      - wl-copy
+      - wofi
+      - blueman
+      - network-manager-applet
+      - convert
+      - xorg-xwayland
+      - xorg-xlsclients
+      - qt5-wayland
+      - glfw-wayland
+      - thunar-gtk3
+      - thunar-media-plugin-gtk3
+      - thunar-volman-gtk3
+      - thunar-shares-plugin-gtk3
+      - thunar-archive-plugin-gtk3
+      - xdg-desktop-portal
+      - xdg-desktop-portal-wlr
+      - libpipewire02
+      - pipewire
+      - gnome-keyring
+      - qt5ct
+      - polkit-gnome
+      - greetd
+      - greetd-gtkgreet
+      - gnome-keyring-daemon
+      - otf-font-awesome
+      - poweralertd
+
+- name: active needed systemd services
+  tags:
+    - sway
+    - never
+  ansible.builtin.systemd:
+    state: started
+    enabled: true
+    name:
+      - xdg-desktop-portal
+      - xdg-desktop-portal-wlr
+      - pipewire.service
+      - greetd
+
+- name: greetd config files
+  tags:
+    - sway
+    - never
+  block:
+    - name: greetd config
+      template:
+        src: '../files/greetd_config.toml'
+        dest: '/etc/greetd/config.toml'
+        become: true
+        force: no
+    - name: greetd sway config
+      template:
+        src: '../files/greetd_sway-config'
+        dest: '/etc/greetd/sway-config'
+        become: true
+        force: no
+    - name: greetd environments
+      template:
+        src: '../files/greetd_environments'
+        dest: '/etc/greetd/environments'
+        become: true
+        force: no
+    - name: sway-run
+      template:
+        src: '../files/sway-run'
+        dest: '/usr/local/bin/sway-run'
+        mode: u=rwx,g=x,o=x
+        become: true
+        force: no
+    - name: wayland_enablement
+      template:
+        src: '../files/wayland_enablement.sh'
+        dest: '/usr/local/bin/wayland_enablement.sh'
+        mode: u=rwx,g=x,o=x
+        become: true
+        force: no
