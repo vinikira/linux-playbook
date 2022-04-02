@@ -1,10 +1,10 @@
 ---
-- include: asdf.yml
-- include: docker.yml
-- include: zola.yml
-- include: emacs.yml
-- include: ngrok.yml
-- include: elixir.yml
+- include_tasks: asdf.yml
+- include_tasks: docker.yml
+- include_tasks: zola.yml
+- include_tasks: emacs.yml
+- include_tasks: ngrok.yml
+- include_tasks: elixir.yml
 
 - name: arch development tools
   package:

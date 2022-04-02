@@ -1,9 +1,9 @@
 ---
-- include: zsh.yml
-- include: dot-files.yml
-- include: vault.yml
-- include: syncthing.yml
-- include: tmux.yml
+- include_tasks: zsh.yml
+- include_tasks: dot-files.yml
+- include_tasks: vault.yml
+- include_tasks: syncthing.yml
+- include_tasks: tmux.yml
 
 - name: common packages
   package:
