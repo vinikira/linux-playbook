@@ -2,7 +2,6 @@
 - name: Installing media packages
   package:
     name:
-      - vlc
       - minidlna
       - mpv
       - obs-studio
