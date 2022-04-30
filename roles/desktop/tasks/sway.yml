@@ -39,6 +39,7 @@
       - gnome-keyring-daemon
       - otf-font-awesome
       - poweralertd
+      - imv
 
 - name: active needed systemd services
   tags:
