@@ -40,6 +40,7 @@
       - otf-font-awesome
       - poweralertd
       - imv
+      - swappy
 
 - name: active needed systemd services
   tags:
