@@ -38,9 +38,22 @@
       - greetd-gtkgreet
       - gnome-keyring-daemon
       - otf-font-awesome
-      - poweralertd
       - imv
       - swappy
+      - tlp
+      - smartmontools
+
+- name: arch AUR packages
+  tags:
+    - sway
+    - never
+  shell: |
+     yay -Qi {{ item }} 2>/dev/null || sudo -u {{ user_name }} yay -S {{ item }} --noconfirm
+  with_items:
+    - threshy
+    - poweralertd
+  become: true
+  when: ansible_facts['os_family'] == 'Archlinux'
 
 - name: active needed systemd services
   tags:
