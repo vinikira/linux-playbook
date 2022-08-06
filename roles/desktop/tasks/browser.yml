@@ -1,38 +1,31 @@
 ---
-- name: Check if Librewolf is installed
+- name: Check if Firefox is installed
   stat:
-    path: /usr/bin/librewolf
-  register: librewolf
-  changed_when: not librewolf.stat.exists
+    path: /usr/bin/firefox
+  register: firefox
+  changed_when: not firefox.stat.exists
 
-- name: Librewolf Arch
-  when: librewolf.changed and ansible_facts['os_family'] == 'Archlinux'
+- name: Firefox Arch
+  when: firefox.changed and ansible_facts['os_family'] == 'Archlinux'
   block:
-  - name: Install Librewolf browser
+  - name: Install Firefox browser
     package:
       name:
-        - librewolf-bin
+        - firefox
         - browserpass
       state: present
     become: true
   - name: Browser Pass
     make:
       chdir: /usr/lib/browserpass
-      target: hosts-librewolf-user
+      target: hosts-firefox-user
 
-- name: Librewolf Ubuntu
-  when: librewolf.changed and ansible_facts['os_family'] == 'Ubuntu'
+- name: Firefox Ubuntu
+  when: firefox.changed and ansible_facts['os_family'] == 'Ubuntu'
   block:
-  - name: Add PPA Librewolf browser
-    become: true
-    shell: >
-      echo "deb [arch=amd64] http://deb.librewolf.net $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/librewolf.list
-      sudo wget https://deb.librewolf.net/keyring.gpg -O /etc/apt/trusted.gpg.d/librewolf.gpg
-      sudo apt update
-
-  - name: Install Librewolf
+  - name: Install Firefox
     package:
-      name: librewolf
+      name: firefox
       state: present
     become: true
 
@@ -56,8 +49,8 @@
       name: browserpass
       state: present
     become: true
-  - name: Linking Browserpass host file for Librewolf
+  - name: Linking Browserpass host file for Firefox
     when: browserpass.changed
     make:
       chdir: /usr/lib/browserpass
-      target: hosts-librewolf-user
+      target: hosts-firefox-user
