@@ -13,7 +13,6 @@
       - waybar
       - slurp
       - sway
-      - wl-copy
       - wofi
       - blueman
       - network-manager-applet
